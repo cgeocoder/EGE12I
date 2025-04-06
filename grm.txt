@@ -1,0 +1,30 @@
+# EGE12 Language grammar
+
+expr_find ::= 'íàøëîñü' '(' tok_number ')'
+expr_bin_op ::= expr_cond 'ÈËÈ' expr_cond
+
+expr_cond ::= expr_find | expr_bin_op
+
+
+expr_replace ::= 'çàìåíèòü' '(' tok_number ',' tok_number ')'
+
+
+if_cond ::= 'ÅÑËÈ' expr_cond
+then_block ::= 'ÒÎ' blocks
+else_block ::= 'ÈÍÀ×Å' blocks
+end_if ::= 'ÊÎÍÅÖ' 'ÅÑËÈ'
+
+full_block_cond ::= if_cond then_block else_block end_if
+part_block_cond ::= if_cond then_block end_if
+
+
+while_cond ::= 'ÏÎÊÀ' expr_cond
+end_while ::= 'ÊÎÍÅÖ ÏÎÊÀ'
+
+block_while ::= while_cond blocks end_while
+
+
+blocks ::= ( full_block_cond | part_block_cond | block_while | expr_replace ) {blocks}
+
+
+program ::= 'ÍÀ×ÀËÎ' blocks 'ÊÎÍÅÖ'
